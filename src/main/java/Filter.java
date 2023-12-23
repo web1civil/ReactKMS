@@ -8,7 +8,7 @@ import java.util.List;
 public class ShoppingCartExample extends JFrame {
 
     private CatalogPanel catalogPanel;
-
+    
     public ShoppingCartExample() {
         setTitle("Онлайн каталог товарів");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -66,59 +66,64 @@ public class ShoppingCartExample extends JFrame {
         }
     }
 
-    class CatalogPanel extends JPanel {
-        private List<Product> products;
+ public class CatalogPanel extends JPanel {
+    private List<Product> products;
 
-        public CatalogPanel() {
-            setLayout(new FlowLayout());
-            products = new ArrayList<>();
+    public CatalogPanel() {
+        setLayout(new FlowLayout());
+        products = new ArrayList<>();
 
-            products.add(new Product("Товар 1", "Електроніка", 29.99));
-            products.add(new Product("Товар 2", "Одяг", 39.99));
-            products.add(new Product("Товар 3", "Електроніка", 49.99));
+        products.add(new Product("Товар 1", "Електроніка", 29.99));
+        products.add(new Product("Товар 2", "Одяг", 39.99));
+        products.add(new Product("Товар 3", "Електроніка", 49.99));
 
-            updateUI();
-        }
+        updateUI();
+    }
 
-        public void filterByCategory(String category) {
-            removeAll();
-            for (Product product : products) {
-                if (category.equals("Всі") || category.equals(product.getCategory())) {
-                    add(product);
-                }
-            }
-            revalidate();
-            repaint();
-        }
-
-        private void updateUI() {
-            for (Product product : products) {
+    public void filterByCategory(String category) {
+        removeAll();
+        for (Product product : products) {
+            if (category.equals("Всі") || category.equals(product.getCategory())) {
                 add(product);
             }
         }
+        revalidate();
+        repaint();
     }
 
-    class FilterPanel extends JPanel {
-        private JComboBox<String> categoryComboBox;
-
-        public FilterPanel() {
-            setLayout(new FlowLayout());
-
-            categoryComboBox = new JComboBox<>();
-            categoryComboBox.addItem("Всі");
-            categoryComboBox.addItem("Електроніка");
-            categoryComboBox.addItem("Одяг");
-
-            categoryComboBox.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    String selectedCategory = (String) categoryComboBox.getSelectedItem();
-                    catalogPanel.filterByCategory(selectedCategory);
-                }
-            });
-
-            add(new JLabel("Обрати категорію: "));
-            add(categoryComboBox);
+    private void updateUI() {
+        for (Product product : products) {
+            add(product);
         }
     }
+}
+
+   public class FilterPanel extends JPanel {
+    private JComboBox<String> categoryComboBox;
+
+    public FilterPanel(CatalogPanel catalogPanel) {
+        setLayout(new FlowLayout());
+
+        categoryComboBox = new JComboBox<>();
+        categoryComboBox.addItem("Всі");
+        categoryComboBox.addItem("Електроніка");
+        categoryComboBox.addItem("Одяг");
+
+        categoryComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selectedCategory = (String) categoryComboBox.getSelectedItem();
+                catalogPanel.filterByCategory(selectedCategory);
+            }
+        });
+
+        add(new JLabel("Обрати категорію: "));
+        add(categoryComboBox);
+
+        // Умовний рендеринг з використанням null
+        if (someCondition) {
+            add(someComponent);
+        }
+    }
+}
 }
